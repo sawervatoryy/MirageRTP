@@ -1,0 +1,146 @@
+# ═══════════════════ MirageRTP — config.yml ═══════════════════
+
+# true  — /rtp открывает меню выбора режима
+# false — /rtp сразу телепортирует по режиму default-mode (остальные: /rtp far, /rtp near ...)
+use-gui: true
+default-mode: default
+
+delay:
+  seconds: 3              # задержка перед телепортацией (0 — без задержки)
+  move-tolerance: 0.0     # допуск смещения в блоках; 0.0 — отмена при любом изменении X/Y/Z
+  cancel-on-move: true
+  cancel-on-damage: true
+  display: BOTH           # ACTIONBAR | TITLE | BOTH
+
+search:
+  max-attempts: 30
+  avoid-worldguard-regions: true   # не телепортировать в любые регионы WorldGuard
+  exempt-permission: miragertp.exempt  # такие игроки не выбираются целью режима «рядом с игроками»
+  nether-min-y: 32
+  nether-max-y: 120
+  unsafe-blocks:
+    - LAVA
+    - WATER
+    - FIRE
+    - SOUL_FIRE
+    - CACTUS
+    - MAGMA_BLOCK
+    - CAMPFIRE
+    - SOUL_CAMPFIRE
+    - SWEET_BERRY_BUSH
+    - POWDER_SNOW
+    - COBWEB
+    - WITHER_ROSE
+    - POINTED_DRIPSTONE
+    - TNT
+    - BEDROCK
+    - NETHER_PORTAL
+    - END_PORTAL
+    - BUBBLE_COLUMN
+
+protection:
+  # Иммунитет к урону от падения: во время поиска точки (падение в яме)
+  # и после телепортации — до первого приземления, но не дольше этого времени (мс).
+  # 0 — отключить защиту после телепортации.
+  fall-grace-millis: 15000
+
+  # Полный иммунитет к ЛЮБОМУ урону (мобы, игроки, огонь, падение...) на N секунд после телепортации.
+  # 0 — отключить.
+  damage-immunity-seconds: 5
+
+# Подробные логи телепортаций (координаты, отменённый урон) — для диагностики
+debug: false
+
+pit:
+  anti-spam-millis: 1500     # защита от повторного срабатывания при входе в яму
+  respect-cooldown: true     # true — учитывать кулдаун режима; false — телепортировать всегда
+  set-cooldown: true         # ставить ли кулдаун после телепортации через яму
+  ambient:
+    enabled: true
+    interval-ticks: 10
+    particles-per-pulse: 8   # на одну яму за один импульс
+    view-distance: 48        # частицы рисуются, только если игрок ближе этого расстояния
+
+# Режимы. world: current — мир, где стоит игрок.
+# center: SPAWN | ZERO | PLAYER | RANDOM_PLAYER
+# cost.type: NONE | VAULT | POINTS
+# cooldowns (сек): default — базовый; прочие ключи — группы по праву miragertp.cooldown.<группа>
+modes:
+  default:
+    display-name: "&fОбычный мир"
+    permission: ""
+    world: current
+    center: SPAWN
+    min-radius: 300
+    max-radius: 3000
+    cost: { type: NONE, amount: 0 }
+    cooldowns: { default: 60, vip: 30, premium: 10 }
+  far:
+    display-name: "&#00ACFFДальний РТП"
+    permission: miragertp.far
+    world: current
+    center: ZERO
+    min-radius: 5000
+    max-radius: 15000
+    cost: { type: VAULT, amount: 500 }
+    cooldowns: { default: 300, vip: 150, premium: 60 }
+  near:
+    display-name: "&fРядом с игроками"
+    permission: ""
+    world: current
+    center: RANDOM_PLAYER
+    min-radius: 100
+    max-radius: 400
+    cost: { type: NONE, amount: 0 }
+    cooldowns: { default: 120, vip: 60, premium: 30 }
+  nether:
+    display-name: "&#00ACFFНезер"
+    permission: ""
+    world: world_nether
+    center: SPAWN
+    min-radius: 100
+    max-radius: 1500
+    cost: { type: NONE, amount: 0 }
+    cooldowns: { default: 120, vip: 60 }
+  end:
+    display-name: "&fЭнд"
+    permission: ""
+    world: world_the_end
+    center: ZERO
+    min-radius: 200
+    max-radius: 1000
+    cost: { type: NONE, amount: 0 }
+    cooldowns: { default: 120, vip: 60 }
+
+# Эффекты. particles — набор именованных частиц, sound — ключ звука Minecraft.
+# Для DUST можно указать color "#RRGGBB" и size.
+effects:
+  countdown-tick:
+    sound: { sound: "block.note_block.hat", volume: 0.7, pitch: 1.5 }
+  countdown-ring:
+    particles:
+      main: { type: DUST, color: "#00ACFF", size: 1.0, count: 1 }
+      spark: { type: END_ROD, count: 1, spread: 0.02, speed: 0.0 }
+  cancel:
+    particles:
+      smoke: { type: SMOKE, count: 12, spread: 0.3, speed: 0.02 }
+    sound: { sound: "block.beacon.deactivate", volume: 0.7, pitch: 1.2 }
+  teleport-out:
+    particles:
+      portal: { type: PORTAL, count: 60, spread: 0.5, speed: 0.6 }
+      dust: { type: DUST, color: "#00ACFF", size: 1.4, count: 25, spread: 0.4 }
+    sound: { sound: "entity.enderman.teleport", volume: 0.8, pitch: 1.0 }
+  teleport-in:
+    particles:
+      portal: { type: REVERSE_PORTAL, count: 60, spread: 0.5, speed: 0.1 }
+      dust: { type: DUST, color: "#FFFFFF", size: 1.2, count: 20, spread: 0.4 }
+    sound: { sound: "entity.enderman.teleport", volume: 0.8, pitch: 1.3 }
+  pit-enter:
+    particles:
+      burst: { type: DUST, color: "#00ACFF", size: 1.6, count: 40, spread: 0.6 }
+      portal: { type: PORTAL, count: 50, spread: 0.5, speed: 0.8 }
+    sound: { sound: "block.portal.travel", volume: 0.4, pitch: 1.6 }
+  pit-ambient:
+    particles:
+      dust: { type: DUST, color: "#00ACFF", size: 1.3, count: 1 }
+      portal: { type: PORTAL, count: 2, spread: 0.2, speed: 0.3 }

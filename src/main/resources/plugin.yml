@@ -1,0 +1,34 @@
+name: MirageRTP
+version: '${version}'
+main: org.github.sawervatoryy.mirageRTP.MirageRTP
+api-version: '1.21.4'
+load: POSTWORLD
+authors: [sawervatoryy]
+description: Случайная телепортация с режимами, GUI и РТП-ямами
+softdepend: [Vault, PlayerPoints, WorldGuard, PlaceholderAPI]
+
+commands:
+  rtp:
+    description: Случайная телепортация
+    aliases: [wild, randomtp]
+    usage: /rtp [режим]
+
+permissions:
+  miragertp.use:
+    description: Использование /rtp
+    default: true
+  miragertp.admin:
+    description: Админ-команды MirageRTP
+    default: op
+  miragertp.exempt:
+    description: Игрока нельзя выбрать целью режима «рядом с игроками»
+    default: false
+  miragertp.bypass.cooldown:
+    description: Игнорировать кулдаун
+    default: op
+  miragertp.bypass.delay:
+    description: Игнорировать задержку перед телепортацией
+    default: false
+  miragertp.bypass.cost:
+    description: Игнорировать стоимость
+    default: op

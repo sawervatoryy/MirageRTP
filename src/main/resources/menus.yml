@@ -1,0 +1,68 @@
+# ═══════════════════ MirageRTP — menus.yml ═══════════════════
+# Плейсхолдеры в name/lore: {mode_name} {min} {max} {cost} {cooldown} {status} {world}
+main:
+  title: "&f⌈ &#00ACFFRTP &f⌋ ‹ Выбор режима ›"
+  rows: 3
+  filler:
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+  animation:
+    enabled: true
+    interval-ticks: 2
+    step-sound: { sound: "block.note_block.hat", volume: 0.4, pitch: 1.6 }
+    item-sound: { sound: "entity.experience_orb.pickup", volume: 0.6, pitch: 1.2 }
+  items:
+    default:
+      slot: 10
+      material: GRASS_BLOCK
+      name: "{mode_name}"
+      lore:
+        - ""
+        - "&f‹ Радиус: &#00ACFF{min}&f – &#00ACFF{max} &f›"
+        - "&f‹ Кулдаун: &#00ACFF{cooldown} &f›"
+        - "&f‹ Цена: &#00ACFF{cost} &f›"
+        - ""
+        - "{status}"
+    far:
+      slot: 12
+      material: ENDER_EYE
+      glow: true
+      name: "{mode_name}"
+      lore:
+        - ""
+        - "&f‹ Радиус: &#00ACFF{min}&f – &#00ACFF{max} &f›"
+        - "&f‹ Кулдаун: &#00ACFF{cooldown} &f›"
+        - "&f‹ Цена: &#00ACFF{cost} &f›"
+        - ""
+        - "{status}"
+    near:
+      slot: 14
+      material: PLAYER_HEAD
+      name: "{mode_name}"
+      lore:
+        - ""
+        - "&f‹ Радиус вокруг игрока: &#00ACFF{min}&f – &#00ACFF{max} &f›"
+        - "&f‹ Кулдаун: &#00ACFF{cooldown} &f›"
+        - "&f‹ Цена: &#00ACFF{cost} &f›"
+        - ""
+        - "{status}"
+    nether:
+      slot: 15
+      material: NETHERRACK
+      name: "{mode_name}"
+      lore:
+        - ""
+        - "&f‹ Радиус: &#00ACFF{min}&f – &#00ACFF{max} &f›"
+        - "&f‹ Кулдаун: &#00ACFF{cooldown} &f›"
+        - ""
+        - "{status}"
+    end:
+      slot: 16
+      material: END_STONE
+      name: "{mode_name}"
+      lore:
+        - ""
+        - "&f‹ Радиус: &#00ACFF{min}&f – &#00ACFF{max} &f›"
+        - "&f‹ Кулдаун: &#00ACFF{cooldown} &f›"
+        - ""
+        - "{status}"
